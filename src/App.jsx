@@ -1,6 +1,6 @@
 import './App.css'
 import Greeting from './components/Leccion 1/Greeting.jsx'
-
+import SaludoButton from './components/Leccion 2- Eventos/SaludoButton.jsx';
 function App() {
  
   const nombres = ['Luis Ernesto', 'Ana', 'Pedro', 'Sofía', 'Jorge'];
@@ -9,8 +9,8 @@ function App() {
     <>
      <ul>
      {  
-        nombres.map((nombre, index) => (
-            <Greeting key={index} name={nombre} />
+        nombres.map((nombre, key) => (
+            <SaludoButton key={key} name={nombre} />
         ))
      }
      
