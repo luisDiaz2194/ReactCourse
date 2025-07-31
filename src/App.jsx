@@ -1,21 +1,16 @@
 import './App.css'
-import Greeting from './components/Leccion 1/Greeting.jsx'
-import SaludoButton from './components/Leccion 2- Eventos/SaludoButton.jsx';
+import FormularioContacto from './components/Leccion 2- Eventos/FormularioContacto';
+import NombreUsuario from './components/Leccion 2- Eventos/NombreUsuario';
 function App() {
  
-  const nombres = ['Luis Ernesto', 'Ana', 'Pedro', 'Sofía', 'Jorge'];
+  //const nombres = ['Luis Ernesto', 'Ana', 'Pedro', 'Sofía', 'Jorge'];
 
   return (
     <>
-     <ul>
-     {  
-        nombres.map((nombre, key) => (
-            <SaludoButton key={key} name={nombre} />
-        ))
-     }
-     
-     </ul>
+     <FormularioContacto name="Luis Ernesto"/>
+     <NombreUsuario/>
     </>
+     
   )
 }
 
