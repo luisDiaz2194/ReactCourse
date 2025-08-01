@@ -1,16 +1,16 @@
 import './App.css'
-
-import Contador from './components/Leccion 3 UseState/Contador';
+import FormularioCreate from './components/Leccion 4 - Onchange/FormularioCreate'
 function App() {
- 
+
   //const nombres = ['Luis Ernesto', 'Ana', 'Pedro', 'Sofía', 'Jorge'];
 
   return (
     <>
-     <Contador/>
+      <FormularioCreate/>
     </>
-     
+
   )
 }
 
 export default App
+
