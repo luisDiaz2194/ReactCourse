@@ -4,7 +4,6 @@ import { useState } from "react"
 import './formulario.css'
 
 function FormularioCreate() {
-
     const correosRegistrados = ["lurdecan@gmail.com", "ejemplo@hotmail.com", "ejemplo2@gmail.org"]
     //Función para obtener un elemento del DOM enviado desde el hijo inputText , para cuando la validación del input sea correcta o incorrecta
     const [mensajeUsuario, setMensajeUsuario] = useState("");
@@ -24,23 +23,16 @@ function FormularioCreate() {
                 setClaseValidInputUsuario("is-valid");
             } else {
                 setClaseValidInputUsuario("is-invalid");
-
             }
 
         }
     }
-
-
-
     const setMessageValidationInput = (validationObj) => {
         if (validationObj.validationInputName === "usuario") {
             mostrarMensajeValidacionInputUsuario(validationObj);
-
         }
 
     }
-
-
     return (
         <>
             <h1>Formulario de Registro</h1>
