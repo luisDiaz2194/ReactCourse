@@ -34,29 +34,37 @@ function FormularioCreate() {
     }
     return (
         <>
-            <h1>Formulario de Registro</h1>
+           <div className="formulario">
+             <h1>Formulario de Registro</h1>
             <div className="form-group">
                 <label>Usuario</label>
                 <InputText className={claseValidInputUsuario} onValidation={setMessageValidationInput} idInput={"usuarioInput"} type={"text"} name={"usuario"} />
-                <span>{mensajeUsuario} </span>
+                {
+                    claseValidInputUsuario === "is-valid" ? <AiOutlineCheckCircle className="icono-validacion validacion-ok" /> : ""
+                }
+                {
+                    claseValidInputUsuario === "is-invalid" ? <AiOutlineCloseCircle className="icono-validacion validacion-noOk" /> : ""
+                }
+                <span className={`message-input ${claseValidInputUsuario}`}>{mensajeUsuario} </span>
             </div>
             <div className="form-group">
                 <label>Contraseña</label>
                 <InputText className={claseValidInputEmail} onValidation={setMessageValidationInput} idInput={"passwordInput"} type={"password"} name={"pass"} />
                 <br />
                 <div>
-                    <span>Contiene al menos una Mayúscula </span> <br />
-                    <span>Contiene al menos un Número </span><br />
-                    <span>Contiene al menos un Símbolo </span><br />
-                    <span>Contiene al menos 8 caracteres </span><br />
+                    <span className="list-pass">Contiene al menos una Mayúscula </span> <br />
+                    <span className="list-pass">Contiene al menos un Número </span><br />
+                    <span className="list-pass">Contiene al menos un Símbolo </span><br />
+                    <span className="list-pass">Contiene al menos 8 caracteres </span><br />
                     <br />
-                    <span>{mensajePassword} </span>
+                      <span className={`message-input ${claseValidInputEmail}`}>{mensajePassword} </span>
 
                 </div>
             </div>
             <div className="form-group">
                 <ButtonCreate />
             </div>
+           </div>
         </>
     )
 }

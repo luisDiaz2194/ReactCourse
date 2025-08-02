@@ -31,9 +31,7 @@ function InputText({ idInput, name, type, onValidation, className }) {
 
 
     return (
-        <div>
             <input id={idInput} name={name} type={type} className={className} onBlur={muestraTextoEscrito} />
-        </div>
     )
 }
 

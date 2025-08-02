@@ -1,13 +1,95 @@
-input{
-    width: 280px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+:root{
+    --color-primario: #ffffff;
+    --color-secundario: #d4d4d4;
+    --color-invalid: red;
+    --color-valid: green;
+    --color-boton-hover: #45a049;
+    --bg-valid:#d4edda;
+    --bg-invalid:#f8d7da;
+}
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0px 20px 10px 20px;
+    border: 1px solid var(--color-primario);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+}
+.formulario h1{
+    font-size: 30px;
+    color: var(--color-primario);
+    text-align: center;
+    margin: 0;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 10px;
+    width: 350px;
+    margin: 20px auto;
+    position:relative;
+}
+.form-group label{
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-primario);
+    text-align: left;
+}
+.form-group input{
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-secundario);
     box-sizing: border-box;
+    background-color: var(--color-secundario);
+    color: #000;
+    
 }
-.is-valid{
+.form-group input.is-valid{
     border: 1px solid green;
 }
-.is-invalid{
+.form-group input.is-invalid{
     border: 1px solid red;
+}
+
+.form-group .icono-validacion{
+    position: absolute;
+    top: 38%;
+    right: 10px;
+}
+
+.form-group .validacion-ok{
+    color: green;
+    font-size: 20px;
+}
+.form-group .validacion-noOk{
+    color: red;
+    font-size: 20px;
+}
+.form-group .message-input{
+    font-size: 14px;
+    margin-top: 5px;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+.form-group .message-input.is-valid{
+    background-color: #d4edda;
+    color: #155724;
+}
+.form-group .message-input.is-invalid{
+    background-color: #f8d7da;
+    color: #721c24;
 }
