@@ -2,6 +2,8 @@ import InputText from "./InputText"
 import ButtonCreate from "./ButtonCreate"
 import { useState } from "react"
 import './formulario.css'
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
+
 
 function FormularioCreate() {
     const correosRegistrados = ["lurdecan@gmail.com", "ejemplo@hotmail.com", "ejemplo2@gmail.org"]
@@ -14,24 +16,21 @@ function FormularioCreate() {
     const mostrarMensajeValidacionInputUsuario = (validationObj) => {
         if (correosRegistrados.includes(validationObj.validationValueTarget)) {
             setClaseValidInputUsuario("is-invalid");
-
             setMensajeUsuario("Ya existe una cuenta con este correo electrónico");
-            console.log(claseValidInputUsuario);
         } else {
             if (validationObj.validationResult) {
                 setMensajeUsuario(validationObj.validationMessage);
                 setClaseValidInputUsuario("is-valid");
             } else {
                 setClaseValidInputUsuario("is-invalid");
+                setMensajeUsuario(validationObj.validationMessage);
             }
-
         }
     }
     const setMessageValidationInput = (validationObj) => {
         if (validationObj.validationInputName === "usuario") {
             mostrarMensajeValidacionInputUsuario(validationObj);
         }
-
     }
     return (
         <>
