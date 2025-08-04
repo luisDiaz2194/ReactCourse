@@ -1,17 +1,16 @@
 import InputText from "./InputText"
 import ButtonCreate from "./ButtonCreate"
-import { use, useState } from "react"
+import { useState } from "react"
 import './formulario.css'
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
-
+import ModalCuentaUsuario from "./ModalCuentaUsuario";
 
 function FormularioCreate() {
     const correosRegistrados = ["lurdecan@gmail.com", "ejemplo@hotmail.com", "ejemplo2@gmail.org"]
-    //Función para obtener un elemento del DOM enviado desde el hijo inputText , para cuando la validación del input sea correcta o incorrecta
     const [mensajeUsuario, setMensajeUsuario] = useState("");
     const [mensajePassword, setMensajePassword] = useState("");
     const [claseValidInputUsuario, setClaseValidInputUsuario] = useState("");
-    const [claseValidInputEmail, setClaseValidInputEmail] = useState("");
+    const [claseValidInputPass, setClaseValidInputPass] = useState("");
     const [jsonValidacionEmail, setjsonValidacionEmail] = useState({
         mayuscula: false,
         numero: false,
@@ -19,40 +18,67 @@ function FormularioCreate() {
         longitud: false,
     });
 
-    const mostrarMensajeValidacionInputUsuario = (validationObj) => {
-        if (validationObj.validationInputTarget.value === "") {
-            setClaseValidInputUsuario("is-invalid");
-            setMensajeUsuario("El campo usuario no puede estar vacío");
-            console.log("adsasd")
-            return;
-        }
-        if (correosRegistrados.includes(validationObj.validationValueTarget)) {
-            setClaseValidInputUsuario("is-invalid");
-            setMensajeUsuario("Ya existe una cuenta con este correo electrónico");
-        } else {
-            if (validationObj.validationResult) {
-                setMensajeUsuario(validationObj.validationMessage);
-                setClaseValidInputUsuario("is-valid");
-            } else {
-                setClaseValidInputUsuario("is-invalid");
-                setMensajeUsuario(validationObj.validationMessage);
-            }
-        }
-    }
+    //Variables para obtener el result de cada input
+    const [jsonDataInputsForm, setJsonDataInputsForm] = useState({
+        usuarioValid: false,
+        passValid: false,
+        usuarioValue: "",
+        passValue: ""
+    });
+    //Modal Variables
+    const [modalCuentaUsuario, setModalCuentaUsuario] = useState(false);
+    const [usuarioData, setUsuarioData] = useState(null);
+
+
+    //Función para obtener un elemento del DOM enviado desde el hijo inputText , para cuando la validación del input sea correcta o incorrecta
     const setMessageValidationInput = (validationObj) => {
-        if (validationObj.validationInputName === "usuario") {
-            mostrarMensajeValidacionInputUsuario(validationObj);
-        } else if (validationObj.validationInputName === "pass") {
-            setjsonValidacionEmail(validationObj.validationJsonPattenr);
-            if (validationObj.validationResult) {
-                setMensajePassword(validationObj.validationMessage);
-                setClaseValidInputEmail("is-valid");
-            } else {
-                setMensajePassword(validationObj.validationMessage);
-                setClaseValidInputEmail("is-invalid");
+        const { validationInputName, validationResult, validationJsonPattenr, validationMessage, validationValueTarget } = validationObj;
+        // Actualizar estado reactivo para saber si los campos están validados
+        setJsonDataInputsForm(prev => ({
+            ...prev,
+            [`${validationObj.validationInputName}Valid`]: validationObj.validationResult,
+            [`${validationObj.validationInputName}Value`]: validationObj.validationValueTarget
+        }));
+
+
+        if (validationInputName === "usuario") {
+            if (validationValueTarget === "") {
+                setClaseValidInputUsuario("is-invalid");
+                setMensajeUsuario("El campo usuario no puede estar vacío");
+                return;
             }
+            if (correosRegistrados.includes(validationValueTarget)) {
+                setClaseValidInputUsuario("is-invalid");
+                setMensajeUsuario("Ya existe una cuenta con este correo electrónico");
+                return;
+            }
+            setClaseValidInputUsuario(validationResult ? "is-valid" : "is-invalid");
+            setMensajeUsuario(validationMessage);
+        } else if (validationInputName === "pass") {
+            setjsonValidacionEmail(validationJsonPattenr);
+            setMensajePassword(validationMessage);
+            setClaseValidInputPass(validationResult ? "is-valid" : "is-invalid");
         }
     }
+
+    const handledClickButtonCreate = (event) => {
+        event.preventDefault();
+        //console.log("JsonDataForm: " + JSON.stringify(jsonDataInputsForm));
+        const { usuarioValid, passValid, usuarioValue, passValue } = jsonDataInputsForm;
+
+        if (usuarioValid && passValid) {
+            const cuenta = {
+                usuario: usuarioValue,
+                pass: passValue
+            }
+            localStorage.setItem("Cuenta", JSON.stringify(cuenta));
+            setUsuarioData(cuenta);
+            setModalCuentaUsuario(true);
+        }else{
+            alert("Por favor, ingrese los datos correctamente");
+        }
+    }
+
     return (
         <>
             <div className="formulario">
@@ -64,11 +90,11 @@ function FormularioCreate() {
                 </div>
                 <div className="form-group">
                     <label>Contraseña</label>
-                    <InputText className={claseValidInputEmail} onValidation={setMessageValidationInput} idInput={"passwordInput"} type={"password"} name={"pass"} />
+                    <InputText className={claseValidInputPass} onValidation={setMessageValidationInput} idInput={"passwordInput"} type={"password"} name={"pass"} />
                     <div className="lista-validacion">
                         <span className="list-pass">
-                            {   
-                            jsonValidacionEmail.mayuscula ? <AiOutlineCheckCircle className="icono-validacion-pass validacion-ok" /> : <AiOutlineCloseCircle className="icono-validacion-pass validacion-noOk" />
+                            {
+                                jsonValidacionEmail.mayuscula ? <AiOutlineCheckCircle className="icono-validacion-pass validacion-ok" /> : <AiOutlineCloseCircle className="icono-validacion-pass validacion-noOk" />
                             }  Contiene al menos una Mayúscula</span>
                         <span className="list-pass">{
                             jsonValidacionEmail.numero ? <AiOutlineCheckCircle className="icono-validacion-pass validacion-ok" /> : <AiOutlineCloseCircle className="icono-validacion-pass validacion-noOk" />} Contiene al menos un Número </span>
@@ -80,9 +106,12 @@ function FormularioCreate() {
 
                 </div>
                 <div className="form-group">
-                    <ButtonCreate />
+                    <ButtonCreate handledClickButtonCreate={handledClickButtonCreate} />
                 </div>
             </div>
+            {modalCuentaUsuario &&(
+                <ModalCuentaUsuario usuarioData={usuarioData} onClose={() => setModalCuentaUsuario(false)} />
+            )}
         </>
     )
 }

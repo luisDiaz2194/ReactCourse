@@ -1,7 +1,7 @@
-function ButtonCreate() {
+function ButtonCreate({handledClickButtonCreate}) {
   return (
     <div>
-        <button>Crear Cuenta</button>
+        <button onClick={handledClickButtonCreate}>Crear Cuenta</button>
     </div>
   )
 }
