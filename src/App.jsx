@@ -1,12 +1,12 @@
 import './App.css'
-import Temporizador from './components/Leccion 5 - useEffect/Temporizador'
+import FocusInput from './components/Leccion 6 - useRef/FocusInput'
 function App() {
 
   //const nombres = ['Luis Ernesto', 'Ana', 'Pedro', 'Sofía', 'Jorge'];
 
   return (
     <>
-      <Temporizador/>
+      <FocusInput/>
     </>
 
   )
